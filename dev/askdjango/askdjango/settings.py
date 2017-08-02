@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 	'debug_toolbar',
     'bootstrap3',
     'accounts',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -126,6 +127,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+STATICFILES_STORAGE = 'askdjango.storages.StaticS3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'askdjango.storages.MediaS3Boto3Storage'
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'askdjango', 'static')
@@ -144,3 +148,22 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 INTERNAL_IPS는 blog/views.py에서 print(request.META['REMOTE_ADDR'])를 추가하여 runserver 콘솔에서 확인할 수 있다.
 '''
 INTERNAL_IPS = ["127.0.0.1", "192.168.0.10", "10.0.2.2"]
+
+'''AWS 설정
+1. 쉘 환경 변수 등록
+~/.zshrc에 아래 내용을 추가한다.
+export AWS_ACCESS_KEY_ID=값 입력
+export AWS_SECRET_ACCESS_KEY=값 입력
+export AWS_STORAGE_BUCKET_NAME=값 입력
+export AWS_S3_REGION_NAME=값 입력
+2. 적용
+source ~/.zshrc 실행
+3. python3 콘솔에서 적용한 환경 변수 확인
+python3 콘솔 실행후 아래 명령 입력
+import os
+print(os.environ)
+'''
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+AWS_S3_REGION_NAME = os.environ['AWS_S3_REGION_NAME']
