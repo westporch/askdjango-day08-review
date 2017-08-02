@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
+from django.conf import settings
 
 def min_length_10_validator(value):
     if len(value) < 10:
@@ -68,7 +69,8 @@ class Post(models.Model):
     * sqlite 브라우저 다운 -> http://sqlitebrowser.org/
     '''
 
-    author = models.CharField(max_length=20)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    #author = models.CharField(max_length=20)
     title = models.CharField(max_length=100, 
         validators=[min_length_10_validator],
         help_text='10자 이상 입력해주세요.')
