@@ -1,0 +1,71 @@
+{% load static %}
+<!--
+static  태그는 빌트인 태그가 아니므로 상단에 load static을 추가해줘야 static 태그를 사용할 수 있다.
+-->
+
+<!doctype html>
+<!--
+프로젝트 전반적으로 사용할 파일(layout.html)은 askdjango/templates/layout.html에 정의했다.
+프로젝트 디렉토리에 templates 디렉토리는 없으므로 생성해야 한다.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>AskDjango 블로그</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- 모바일 적용 -->
+        <!-- <script></script> -->
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.7/solar/bootstrap.min.css" />
+        <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		{% block extra_head %}{% endblock %}
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{% url 'blog:post_list' %}">AskDjango</a>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="{% url 'blog:post_list' %}">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if not user.is_authenticated %}
+                            <li><a href="{% url 'signup' %}">회원가입</a></li>
+                            <li><a href="{% url 'login' %}">로그인</a></li>
+                        {% else %}
+                            <li><a href="{% url 'profile' %}">{{ user }}'s 프로필</a></li>
+                            <li><a href="{% url 'logout' %}?next={{ request.path }}">로그아웃</a></li> <!-- request.path는 현재 페이지를 지정한다. -->
+                         {% endif %}
+                    </ul>
+                </div> <!--/.nav-collapse -->
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    {% comment %}
+                    {% block logo %}
+                    <img src="{% static "python3-logo.png" style="width: 100px;" /> %}"
+                    {% endblock %}
+                    {% endcomment %}
+
+                    {% block content %} <!-- 자식 템플릿이 들어올 수 있는 공간을 block으로 정의한다. -->
+                    {% endblock %}
+
+                    <hr/>
+                    &copy; 2017 AskDjango. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
