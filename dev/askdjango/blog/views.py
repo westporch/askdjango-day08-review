@@ -59,7 +59,9 @@ def post_new(request):
 		form = PostForm(request.POST, request.FILES)
 		if form.is_valid(): # 검증을 수행한다.
             # form.cleaned_data # {'title': ??, 'author': ??} # cleaned_data에는 검증을 통과한 값들을 dict 타입으로 제공함.
-			post = form.save()  # DB에 값을 저장한다, 저장한 모델의 인스턴스를 리턴
+			post = form.save(commit=False)  # save(commit=False)는 폼에서 모델의 데이터를 얻어온다, 인스턴스를 저장하지는 않는다.
+			post.user = request.user
+			post.save()
 			#return redirect('blog:post_detail', post.id)    # redirect는 뷰에서 이동처리를 할 때 유용하다. 일반적으로 글을 작성하면 작성한 글을 보여준다.
 			return redirect(post) # post.get_absolute_url()로 이동
         #else:

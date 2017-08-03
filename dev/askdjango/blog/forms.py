@@ -13,7 +13,8 @@ class PostForm(forms.Form):
 class PostForm(forms.ModelForm): # forms의 ModelForm을 상속받음.
     class Meta:
         model = Post
-        fields = '__all__';
+        fields = ['title', 'photo', 'content'] # 포스팅에 필요한 데이터만 가져온다.
+        #fields = '__all__';
         '''fields = '__all__';의 의미
         모든 필드를 지정한다. autor = forms.CharField(), title = forms.CharField(), content = forms.Charfield()를 자동으로 생성함.
         필드만 지정하면 정보를 알아서 다 가져온다.
