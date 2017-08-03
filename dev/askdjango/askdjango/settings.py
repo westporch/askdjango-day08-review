@@ -42,6 +42,15 @@ INSTALLED_APPS = [
     'bootstrap3',
     'accounts',
     'storages',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.naver',
+    'allauth.socialaccount.providers.kakao',
+    'allauth.socialaccount.providers.daum',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -90,6 +99,14 @@ DATABASES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1 # A default site with the URL example.com was added to your database, and since this was the first site, its ID was 1.
+
+SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'   # 이메일 확인을 하지 않음.
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
