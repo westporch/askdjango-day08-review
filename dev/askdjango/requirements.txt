@@ -3,5 +3,5 @@ django-debug-toolbar==1.8
 django-bootstrap3==9.0.0
 Pillow==4.2.1
 django-storages==1.6.4
-django-storages boto3==1.4.5
+boto3==1.4.5
 PyMySQL==0.7.11
